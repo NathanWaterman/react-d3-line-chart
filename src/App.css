@@ -1,22 +1,77 @@
-.App {
-  text-align: center;
+.lineChartSvg{
+    padding:20px;
 }
 
-.App-logo {
-  height: 40vmin;
+div.tooltip {	
+    position: absolute;
+    /* top:0px !important;
+    left:0px !important;		 */
+    text-align: center;			
+    width: 100px;					
+    height: 50px;					
+    padding: 2px;				
+    font: 12px sans-serif;		
+    background: lightsteelblue;	
+    border: 0px;		
+    border-radius: 8px;			
+    pointer-events: none;
+    display:flex;
+    align-items: center;
+    justify-content: center;		
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
+.axis path,
+        .axis line {
+          fill: none;
+          stroke: #000;
+          shape-rendering: crispEdges;
+        }
 
-.App-link {
-  color: #09d3ac;
-}
+        .x.axis path {
+          display: none;
+        }
+
+        .line {
+          fill: none;
+          stroke: steelblue;
+          stroke-width: 2px;
+        }
+
+        .circle {
+            fill: white;
+            stroke: steelblue;
+            stroke-width: 2px;
+        }
+
+        .area {
+            fill: steelblue;
+            stroke: none;
+            opacity: 0.1;
+        }
+
+        .zeroline {
+            fill: none;
+            stroke: red;
+            stroke-width: 0.5px;
+            stroke-dasharray: 5 5;
+        }
+
+        .zerolinetext {
+            fill: red;
+        }
+
+        .overlay {
+            fill: none;
+            stroke: none;
+            pointer-events: all;
+        }
+
+        .focusLine {
+            fill: none;
+            stroke: steelblue;
+            stroke-width: 0.5px;
+        }
+
+        .focusCircle {
+            fill: red;
+        }
