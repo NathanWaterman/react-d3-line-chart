@@ -816,6 +816,22 @@ class App extends Component {
       left: 20,
     };
 
+     // const data = [
+    //   {
+    //     date: 0,
+    //     close: 606.98
+    //   },
+    //   {
+    //     date: 10,
+    //     close: 614.48
+    //   },
+    //   {
+    //     date: 20,
+    //     close: 617.62
+    //   }
+    // ]
+
+
     const margin = { top: 30, right: 120, bottom: 30, left: 50 },
         width = 960 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom

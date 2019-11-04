@@ -28,11 +28,11 @@ class Line extends React.Component {
 			close: d.close
 		}));
 
-		var newData = [];
+		// var newData = [];
 
-		for (var i = 0; i < data.length; i++) {
-			newData.push([new Date(data[i].date).getDate(), data[i].close]);
-		}
+		// for (var i = 0; i < data.length; i++) {
+		// 	newData.push([new Date(data[i].date).getDate(), data[i].close]);
+		// }
 
 		const margin = { top: 30, right: 120, bottom: 30, left: 50 },
 			width = 960 - margin.left - margin.right,
@@ -116,9 +116,15 @@ class Line extends React.Component {
 
 		var newData = [];
 
-		for (var i = 0; i < data.length; i++) {
-			newData.push([new Date(data[i].date).getDate(), data[i].close]);
-		}
+		data.forEach(function(d) {
+			newData.push([new Date(d.date).getDate(),d.close]);
+			return newData;
+		});
+		console.log(newData);
+
+		// for (var i = 0; i < data.length; i++) {
+		// 	newData.push([Date.parse(data[i].date), data[i].close]);
+		// }
 
 		var xDomain = d3.extent(newData, function(d) {
 			return d[0];
@@ -152,65 +158,57 @@ class Line extends React.Component {
 				focus.style("display", "none");
 			})
 			.on("mousemove", function() {
-				var mouse = d3.mouse(this);
-				//console.log(Math.round(mouse[0]));
-				var mouseDate = newXScale.invert(Math.round(mouse[0]));
-				var z = bisectDate(newData, mouseDate); // returns the index to the current data item
-
-				var d0 = newData[z - 1];
-				var d1 = newData[z];
-
-				// work out which date value is closest to the mouse
-				var d = mouseDate - d0[0] > d1[0] - mouseDate ? d1 : d0;
+				var x0 = newXScale.invert(d3.mouse(this)[0]),
+				i = bisectDate(newData, x0, 1),
+				d0 = newData[i - 1],
+				d1 = newData[i],
+				d = x0 - d0[0] > d1[0] - x0 ? d1 : d0;
 
 				var x = newXScale(d[0]);
 				var y = newYScale(d[1]);
 
-				console.log(y);
-
-				focus
-					.select("#focusCircle")
-					.attr("cx", x)
-					.attr("cy", y);
-				focus
-					.select("#focusLineX")
-					.attr("x1", x)
-					.attr("y1", newYScale(yDomain[0]))
-					.attr("x2", x)
-					.attr("y2", newYScale(yDomain[1]));
-				focus
-					.select("#focusLineY")
-					.attr("x1", newXScale(xDomain[0]))
-					.attr("y1", y)
-					.attr("x2", newXScale(xDomain[1]))
-					.attr("y2", y);
+				focus.select('#focusCircle')
+                        .attr('cx', x)
+                        .attr('cy', y);
+				// focus
+				// 	.select("#focusLineX")
+				// 	.attr("x1", x)
+				// 	.attr("y1", newYScale(yDomain[0]))
+				// 	.attr("x2", x)
+				// 	.attr("y2", newYScale(yDomain[1]));
+				// focus
+				// 	.select("#focusLineY")
+				// 	.attr("x1", newXScale(xDomain[0]))
+				// 	.attr("y1", y)
+				// 	.attr("x2", newXScale(xDomain[1]))
+				// 	.attr("y2", y);
 			});
 
 		// Define the div for the tooltip
-		// var div = d3
-		// 	.select("body")
-		// 	.append("div")
-		// 	.attr("class", "tooltip")
-		// 	.style("opacity", 0);
+		var div = d3
+			.select("body")
+			.append("div")
+			.attr("class", "tooltip")
+			.style("opacity", 0);
 
-		// select(this.ref.current)
-		// 	.selectAll("dot")
-		// 	.data(data)
-		// 	.enter()
-		// 	.append("circle")
-		// 	.attr("r", 5)
-		// 	.attr("cx", d => xScale(d.date))
-		// 	.attr("cy", d => yScale(d.close))
-		// 	.on("mouseover", function(d) {
-		// 		div
-		// 			.transition()
-		// 			.duration(200)
-		// 			.style("opacity", 0.9);
-		// 		div
-		// 			.html(d.date + "<br/>" + d.close)
-		// 			.style("left", d3.event.pageX + "px")
-		// 			.style("top", d3.event.pageY - 28 + "px");
-		// 	});
+		select(this.ref.current)
+			.selectAll("dot")
+			.data(data)
+			.enter()
+			.append("circle")
+			.attr("r", 5)
+			.attr("cx", d => xScale(d.date))
+			.attr("cy", d => yScale(d.close))
+			.on("mouseover", function(d) {
+				div
+					.transition()
+					.duration(200)
+					.style("opacity", 0.9);
+				div
+					.html(d.date + "<br/>" + d.close)
+					.style("left", d3.event.pageX + "px")
+					.style("top", d3.event.pageY - 28 + "px");
+			});
 		// .on("mouseout", function(d) {
 		//     div.transition()
 		//         .duration(500)
