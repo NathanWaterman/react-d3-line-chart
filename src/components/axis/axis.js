@@ -2,6 +2,7 @@ import React from "react";
 import { select, selectAll } from "d3-selection";
 import { axisBottom, axisLeft } from "d3-axis";
 import { transition } from 'd3-transition';
+import * as d3 from 'd3';
 
 class Axis extends React.Component {
   constructor() {

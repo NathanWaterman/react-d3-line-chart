@@ -816,21 +816,6 @@ class App extends Component {
       left: 20,
     };
 
-     // const data = [
-    //   {
-    //     date: 0,
-    //     close: 606.98
-    //   },
-    //   {
-    //     date: 10,
-    //     close: 614.48
-    //   },
-    //   {
-    //     date: 20,
-    //     close: 617.62
-    //   }
-    // ]
-
 
     const margin = { top: 30, right: 120, bottom: 30, left: 50 },
         width = 960 - margin.left - margin.right,
@@ -839,15 +824,20 @@ class App extends Component {
     const ticks = 5;
     const t = transition().duration(1000);
 
-    const xScale = scaleBand()
-      .domain(data.map(d => d.date))
-      .range([0, width])
-      .rangeRound([0, width]).padding(0.1);
 
-    const yScale = scaleLinear()
-      .domain(extent(data, d => d.close))
-      .range([height, 0])
-      .nice();
+    // Set the ranges
+    const xScale = d3.scaleTime().range([0, width]);
+    const yScale = d3.scaleLinear().range([height, 0]).nice();
+
+    // const xScale = scaleBand()
+    //   .domain(data.map(d => d.date))
+    //   .range([0, width])
+    //   .rangeRound([0, width]).padding(0.1);
+
+    // const yScale = scaleLinear()
+    //   .domain(extent(data, d => d.close))
+    //   .range([height, 0])
+    //   .nice();
 
     const lineGenerator = line()
       .x(d => xScale(d.date))
