@@ -124,7 +124,6 @@ class Line extends React.Component {
 		data.forEach(function(d) {
 			d.date = new Date(d.date);
 			d.close = +d.close;
-			console.log(d.date);
 		});
 
 		// Scale the range of the data

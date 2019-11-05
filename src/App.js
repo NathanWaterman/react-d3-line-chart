@@ -826,8 +826,8 @@ class App extends Component {
 
 
     // Set the ranges
-    const xScale = d3.scaleTime().range([0, width]);
-    const yScale = d3.scaleLinear().range([height, 0]).nice();
+    const xScale = d3.scaleTime().domain(extent(data, d => new Date(d.date))).range([0, width]).nice();
+    const yScale = d3.scaleLinear().domain(extent(data, d => d.close)).range([height, 0]).nice();
 
     // const xScale = scaleBand()
     //   .domain(data.map(d => d.date))
