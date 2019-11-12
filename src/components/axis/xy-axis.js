@@ -6,14 +6,13 @@ const XYAxis = ({ xScale, yScale, height}) => {
   const xSettings = {
     scale: xScale,
     orient: 'bottom',
-    ticks: 6,
-    transform: `translate(0, ${height})`,
+    ticks: 10,
+    transform: `translate(0, ${height})`
   };
   const ySettings = {
     scale: yScale,
     orient: 'left',
-    transform: 'translate(0, 0)',
-    ticks: 6,
+    transform: 'translate(0, 0)'
   };
   console.log(xSettings);
   return (

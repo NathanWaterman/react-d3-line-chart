@@ -757,38 +757,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-
-    // function mouseover() {
-    //   select(".mouse-line")
-    //     .style("opacity", "1");
-    // }
-    // function mousemove() {
-    //   console.log('mouse move');
-
-    //   let mouse = d3.mouse(this);
-    //   select(".mouse-line")
-    //     .attr("d", function () {
-    //       let d = "M" + mouse[0] + "," + window.innerHeight;
-    //       d += " " + mouse[0] + "," + 0;
-    //       return d;
-    //     });
-    // }
-
-    // function mouseup() {
-    //   console.log('mouse move');
-    // }
-
-    // let mouseG = select('svg');
-    // mouseG.append("path") // this is the black vertical line to follow mouse
-    //   .attr("class", "mouse-line")
-    //   .style("stroke", "black")
-    //   .style("stroke-width", "1px")
-    //   .style("opacity", "0");
-
-    // select('svg')
-    //   .on('mouseover', mouseover)
-    //   .on("mousemove", mousemove)
- 
   }
 
 
@@ -796,7 +764,7 @@ class App extends Component {
     e.preventDefault();
     this.setState((prevState) => {
       const data = prevState.data2.map(d => ({
-        date: d.date,
+        date: new Date(d.date),
         close: d.close
       }))
       return {

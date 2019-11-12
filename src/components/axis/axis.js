@@ -1,10 +1,10 @@
-import React from "react";
+import React, { Component } from "react";
 import { select, selectAll } from "d3-selection";
 import { axisBottom, axisLeft } from "d3-axis";
 import { transition } from 'd3-transition';
 import * as d3 from 'd3';
 
-class Axis extends React.Component {
+class Axis extends Component {
   constructor() {
     super();
     this.ref = React.createRef();
@@ -13,12 +13,15 @@ class Axis extends React.Component {
     this.renderAxis();
   }
   componentDidUpdate() {
-    this.updateAxis();
+    this.renderAxis();
   }
+
+  //rendering axis
   renderAxis() {
     const { scale, orient, ticks } = this.props;
     const node = this.ref.current;
     let axis;
+    const t = transition().duration(500);
 
     if (orient === "bottom") {
       axis = axisBottom(scale)
@@ -29,11 +32,12 @@ class Axis extends React.Component {
       axis = axisLeft(scale)
         .ticks(ticks).tickSize(-window.innerWidth);
     }
-    select(node).call(axis);
+    select(node).transition(t).call(axis);
   }
+  //updating axis
   updateAxis() {
     const { scale, orient, ticks } = this.props;
-    const t = transition().duration(1000)
+    const t = transition().duration(500)
 
     if (orient === "left") {
       const axis = axisLeft(scale).ticks(ticks); 
