@@ -2,22 +2,26 @@
     /* padding:20px; */
 }
 
-div.tooltip {	
+.tooltip {	
     position: absolute;
-    /* top:0px !important;
-    left:0px !important;		 */
+    top:0px !important;
+    left:0px !important;		
     text-align: center;			
     width: 100px;					
-    height: 50px;					
-    padding: 2px;				
-    font: 12px sans-serif;		
-    background: lightsteelblue;	
+    height: 100px;									
+    fill: pink;
+    stroke:black;
     border: 0px;		
     border-radius: 8px;			
     pointer-events: none;
     display:flex;
     align-items: center;
-    justify-content: center;		
+    justify-content: center;
+    opacity:0.8;		
+}
+
+.line-group{
+    cursor: crosshair;
 }
 
 path { 
@@ -43,9 +47,7 @@ path {
 }
 
 .bottom .tick text{
-    transform: rotate(-75deg);
-  /* Legacy vendor prefixes that you probably don't need... */
-  -webkit-transform: rotate(-75deg);
+    transform: translate(-1%, 4%) rotate(-75deg);
 }
 
 .y1,.y2,.y3{

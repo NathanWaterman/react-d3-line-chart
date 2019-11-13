@@ -16,7 +16,9 @@ class Line extends Component {
 		//map data
 		const initialData = data.map(d => ({
 			date: new Date(d.date),
-			close: d.close
+			close: d.close,
+			open: d.open,
+			volume: d.volume
 		}));
 	
 		// Scale the range of the data
@@ -45,8 +47,11 @@ class Line extends Component {
 		//map data
 		const initialData = data.map(d => ({
 			date: new Date(d.date),
-			close: d.close
+			close: d.close,
+			open: d.open,
+			volume: d.volume
 		}));
+
 
 		const margin = { top: 30, right: 120, bottom: 30, left: 50 },
 			width = 960 - margin.left - margin.right,
@@ -70,6 +75,9 @@ class Line extends Component {
 		.datum(initialData)
 		.transition(t)
 		.attr('d', lineGenerator);
+
+		focus.append("rect")
+		.attr("class","tooltip");
 
 		// append the x line
 		focus.append("line")
@@ -98,29 +106,22 @@ class Line extends Component {
 
 		// place the value at the intersection
 		focus.append("text")
-			.attr("class", "y1")
-			.style("stroke", "white")
-			.style("stroke-width", "3.5px")
-			.style("opacity", 0.8)
-			.attr("dx", 8)
-			.attr("dy", "-.3em");
-		focus.append("text")
 			.attr("class", "y2")
 			.attr("dx", 8)
-			.attr("dy", "-.3em");
+			.attr("dy", "2em");
 
-		// place the date at the intersection
+		// place the open at the intersection
 		focus.append("text")
 			.attr("class", "y3")
-			.style("stroke", "white")
-			.style("stroke-width", "3.5px")
-			.style("opacity", 0.8)
 			.attr("dx", 8)
-			.attr("dy", "1em");
+			.attr("dy", "3em");
+
+		// place the date at the intersection
 		focus.append("text")
 			.attr("class", "y4")
 			.attr("dx", 8)
 			.attr("dy", "1em");
+
 		
 		// append the rectangle to capture mouse
 		select(node).append("rect")
@@ -128,12 +129,15 @@ class Line extends Component {
 			.attr("height", height)
 			.style("fill", "none")
 			.style("pointer-events", "all")
-			.on("mouseover", function() { focus.style("display", null); })
-			.on("mouseout", function() { focus.style("display", "none"); })
+			.on("mouseover", function() { 
+				focus.style("display", null); 
+			})
+			.on("mouseout", function() { 
+				focus.style("display", "none"); 
+			})
 			.on("mousemove", mousemove);
 			
 		function mousemove(){
-			console.log('mouse move');
 			var x0 = xScale.invert(d3.mouse(this)[0]),
 			i = bisectDate(initialData, x0, 1),
 			d0 = initialData[i - 1],
@@ -145,43 +149,36 @@ class Line extends Component {
 					"translate(" + xScale(d.date) + "," +
 									yScale(d.close) + ")");
 
-		focus.select("text.y1")
-			.attr("transform",
-					"translate(" + xScale(d.date) + "," +
-									yScale(d.close) + ")")
-			.text(d.close);
-
 		focus.select("text.y2")
 			.attr("transform",
-					"translate(" + xScale(d.date) + "," +
-									yScale(d.close) + ")")
-			.text(d.close);
+					"translate(" + 0 + "," +
+									0 + ")")
+			.text("close " + d.close);
 
 		focus.select("text.y3")
 			.attr("transform",
-					"translate(" + xScale(d.date) + "," +
-									yScale(d.close) + ")")
-			.text(formatDate(d.date));
+					"translate(" + 0 + "," +
+									0 + ")")
+			.text("Open " + d.open);
 
 		focus.select("text.y4")
 			.attr("transform",
-					"translate(" + xScale(d.date) + "," +
-									yScale(d.close) + ")")
-			.text(formatDate(d.date));
+					"translate(" + 0 + "," +
+									0 + ")")
+			.text("Date " + formatDate(d.date));
 
 		focus.select(".x")
 			.attr("transform",
-					"translate(" + xScale(d.date) + "," +
-									yScale(d.close) + ")")
+					"translate(" + xScale(d.date) + "," + yScale(d.close) + ")")
+						.attr("y1", -height)
 						.attr("y2", height - yScale(d.close));
 
 		focus.select(".y")
 			.attr("transform",
-					"translate(" + width * -1 + "," +
-									yScale(d.close) + ")")
+					"translate(" + width * -1 + "," + yScale(d.close) + ")")
 						.attr("x2", width + width);
 		}
-		
+
 	}
 	render() {
 		return <g className="line-group" ref={this.ref} />;

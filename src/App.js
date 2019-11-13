@@ -757,6 +757,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+
   }
 
 
@@ -765,7 +766,9 @@ class App extends Component {
     this.setState((prevState) => {
       const data = prevState.data2.map(d => ({
         date: new Date(d.date),
-        close: d.close
+        close: d.close,
+        open: d.open,
+        volume: d.volume
       }))
       return {
         data

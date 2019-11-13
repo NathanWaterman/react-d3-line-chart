@@ -23,6 +23,8 @@ class Axis extends Component {
     let axis;
     const t = transition().duration(500);
 
+    
+
     if (orient === "bottom") {
       axis = axisBottom(scale)
       .ticks(ticks)
