@@ -18,7 +18,10 @@ class Line extends Component {
 			date: new Date(d.date),
 			close: d.close,
 			open: d.open,
-			volume: d.volume
+			volume: d.volume,
+			high: d.high,
+			low: d.low,
+			changePercent: d.changePercent
 		}));
 	
 		// Scale the range of the data
@@ -39,6 +42,7 @@ class Line extends Component {
 	componentDidUpdate() {
 		this.updateChart();
 	}
+
 	updateChart() {
 		const node = this.ref.current;
 
@@ -49,7 +53,10 @@ class Line extends Component {
 			date: new Date(d.date),
 			close: d.close,
 			open: d.open,
-			volume: d.volume
+			volume: d.volume,
+			high: d.high,
+			low: d.low,
+			changePercent: d.changePercent
 		}));
 
 
@@ -65,6 +72,11 @@ class Line extends Component {
 		const formatDate = d3.timeFormat("%d-%b");
 		const bisectDate = d3.bisector(function(d) { return d.date; }).left;
 
+		//parse volume
+		const volumeFormat = (num) =>{
+			return Math.sign(num)*((Math.abs(num)/1000).toFixed(2)) + 'k';
+		}
+
 		const focus = select(this.ref.current).append("g") .style("display", "none");
 
 		// Scale the range of the data
@@ -77,7 +89,10 @@ class Line extends Component {
 		.attr('d', lineGenerator);
 
 		focus.append("rect")
-		.attr("class","tooltip");
+		.attr("class","tooltip")
+		.attr("transform",
+					"translate(" + 5 + "," +
+									5 + ")");
 
 		// append the x line
 		focus.append("line")
@@ -104,23 +119,49 @@ class Line extends Component {
 			.style("stroke", "blue")
 			.attr("r", 4);
 
-		// place the value at the intersection
-		focus.append("text")
-			.attr("class", "y2")
-			.attr("dx", 8)
-			.attr("dy", "2em");
+		//Date
+		focus.append("foreignObject")
+			.attr("class", "y1")
+			.attr("transform","translate(" + 8 + "," + 10 + ")")
+			.append("xhtml:div")
 
-		// place the open at the intersection
-		focus.append("text")
-			.attr("class", "y3")
-			.attr("dx", 8)
-			.attr("dy", "3em");
+		//Open
+		focus.append("foreignObject")
+		.attr("class", "y2")
+		.attr("transform","translate(" + 8 + "," + 28 + ")")
+		.append("xhtml:div")
 
-		// place the date at the intersection
-		focus.append("text")
-			.attr("class", "y4")
-			.attr("dx", 8)
-			.attr("dy", "1em");
+		//high
+		focus.append("foreignObject")
+		.attr("class", "y3")
+		.attr("transform","translate(" + 8 + "," + 48 + ")")
+		.append("xhtml:div")
+
+		//low
+		focus.append("foreignObject")
+		.attr("class", "y4")
+		.attr("transform","translate(" + 8 + "," + 66 + ")")
+		.append("xhtml:div")
+
+		//Close
+		focus.append("foreignObject")
+		.attr("class", "y5")
+		.attr("transform","translate(" + 8 + "," + 82 + ")")
+		.append("xhtml:div")
+
+		//Volume
+		focus.append("foreignObject")
+		.attr("class", "y6")
+		.attr("transform","translate(" + 8 + "," + 100 + ")")
+		.append("xhtml:div")
+
+		//% change
+		focus.append("foreignObject")
+		.attr("class", "y7")
+		.attr("transform","translate(" + 8 + "," + 120 + ")")
+		.append("xhtml:div")
+
+
 
 		
 		// append the rectangle to capture mouse
@@ -149,23 +190,28 @@ class Line extends Component {
 					"translate(" + xScale(d.date) + "," +
 									yScale(d.close) + ")");
 
-		focus.select("text.y2")
-			.attr("transform",
-					"translate(" + 0 + "," +
-									0 + ")")
-			.text("close " + d.close);
+		//date
+		focus.select("foreignObject.y1")
+			.html("<span>Date</span>" +"<span>"+ formatDate(d.date) +"</span>")
+		//open
+		focus.select("foreignObject.y2")
+		.html("<span>Open</span>" +"<span>"+ d.open +"</span>")
+		//high
+		focus.select("foreignObject.y3")
+		.html("<span>High</span>" +"<span>"+ d.high +"</span>")
+		//low
+		focus.select("foreignObject.y4")
+		.html("<span>Low</span>" +"<span>"+ d.low +"</span>")
+		//close
+		focus.select("foreignObject.y5")
+		.html("<span>Close</span>" +"<span>"+ d.close +"</span>")
+		//volume
+		focus.select("foreignObject.y6")
+		.html("<span>Volume</span>" +"<span>"+ volumeFormat(d.volume) +"</span>")
+		//% change
+		focus.select("foreignObject.y7")
+		.html("<span>%Change</span>" +"<span>"+ d.changePercent +"%</span>")
 
-		focus.select("text.y3")
-			.attr("transform",
-					"translate(" + 0 + "," +
-									0 + ")")
-			.text("Open " + d.open);
-
-		focus.select("text.y4")
-			.attr("transform",
-					"translate(" + 0 + "," +
-									0 + ")")
-			.text("Date " + formatDate(d.date));
 
 		focus.select(".x")
 			.attr("transform",

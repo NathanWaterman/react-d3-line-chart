@@ -4,20 +4,22 @@
 
 .tooltip {	
     position: absolute;
-    top:0px !important;
-    left:0px !important;		
+    /* top:5px !important;
+    left:5px !important;		 */
     text-align: center;			
-    width: 100px;					
-    height: 100px;									
-    fill: pink;
-    stroke:black;
+    width: 125px;					
+    height: 150px;									
+    fill: #fff;
+    stroke:lightsteelblue;
+    stroke-width: 0.1em;
     border: 0px;		
     border-radius: 8px;			
     pointer-events: none;
     display:flex;
     align-items: center;
     justify-content: center;
-    opacity:0.8;		
+    opacity:0.8;
+    
 }
 
 .line-group{
@@ -50,6 +52,48 @@ path {
     transform: translate(-1%, 4%) rotate(-75deg);
 }
 
-.y1,.y2,.y3{
-    fill:red;
+
+.y1,.y2,.y3,.y4,.y5,.y6,.y7{
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size:0.8em;
+    width:125px;
+    height:25px;
+}
+.y1 span,.y2 span,.y3 span,.y4 span,.y5 span,.y6 span,.y7 span{
+    color:#6d757e;
+}
+.y1 span:last-child{
+    margin-left:29px;
+    color: #464e56;
+    font-weight: 700;
+}
+.y2 span:last-child{
+    margin-left:24px;
+    color: #464e56;
+    font-weight: 700;
+}
+.y3 span:last-child{
+    margin-left:29px;
+    color: #464e56;
+    font-weight: 700;
+}
+.y4 span:last-child{
+    margin-left:32px;
+    color: #464e56;
+    font-weight: 700;
+}
+.y5 span:last-child{
+    margin-left:23px;
+    color: #464e56;
+    font-weight: 700;
+}
+.y6 span:last-child{
+    margin-left:14px;
+    color: #464e56;
+    font-weight: 700;
+}
+.y7 span:last-child{
+    margin-left:5px;
+    color: #464e56;
+    font-weight: 700;
 }
