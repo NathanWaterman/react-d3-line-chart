@@ -15,7 +15,7 @@ class Line extends Component {
 
 		//map data
 		const initialData = data.map(d => ({
-			date: new Date(d.date),
+			date: new Date(d.date.replace(/-/g, '\/')),
 			close: d.close,
 			open: d.open,
 			volume: d.volume,
@@ -50,7 +50,7 @@ class Line extends Component {
 
 		//map data
 		const initialData = data.map(d => ({
-			date: new Date(d.date),
+			date: new Date(d.date.replace(/-/g, '\/')),
 			close: d.close,
 			open: d.open,
 			volume: d.volume,
@@ -161,9 +161,6 @@ class Line extends Component {
 		.attr("transform","translate(" + 8 + "," + 120 + ")")
 		.append("xhtml:div")
 
-
-
-		
 		// append the rectangle to capture mouse
 		select(node).append("rect")
 			.attr("width", width)

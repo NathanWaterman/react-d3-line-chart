@@ -9,6 +9,7 @@ import { transition } from 'd3-transition';
 import * as d3 from 'd3';
 import { select, selectAll } from "d3-selection";
 
+
 class App extends Component {
   constructor() {
     super();
@@ -765,7 +766,7 @@ class App extends Component {
     e.preventDefault();
     this.setState((prevState) => {
       const data = prevState.data2.map(d => ({
-        date: new Date(d.date),
+        date: new Date(d.date.replace(/-/g, '\/')),
         close: d.close,
         open: d.open,
         volume: d.volume,
@@ -802,7 +803,7 @@ class App extends Component {
 
 
     // Set the ranges
-    const xScale = d3.scaleTime().domain(extent(data, d => new Date(d.date))).range([0, width]).nice();
+    const xScale = d3.scaleTime().domain(extent(data, d => new Date(d.date.replace(/-/g, '\/')))).range([0, width]).nice();
     const yScale = d3.scaleLinear().domain(extent(data, d => d.close)).range([height, 0]).nice();
 
     // const xScale = scaleBand()
@@ -822,6 +823,7 @@ class App extends Component {
 
     return (
       <div>
+        <p>{window.ACCESS_TOKEN}</p>
         <button onClick={this.randomData}>Next data</button>
         <svg
           className="lineChartSvg"
